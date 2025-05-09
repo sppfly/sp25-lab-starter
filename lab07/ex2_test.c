@@ -97,6 +97,9 @@ int main() {
   }
 
   for (int i=1; i<=num_threads; i++) {
+    // if (ARRAY_SIZE % i != 0) {
+    //     continue;
+    // } 
     omp_set_num_threads(i);
     start_time = omp_get_wtime();
     for(int j=0; j<REPEAT; j++) {
@@ -106,7 +109,7 @@ int main() {
 
     // verify result is correct (within some threshold)
     if (fabs(serial_result - result) > 0.001) {
-      printf("Manual reduction does not match reference.\n");
+      printf("Manual reduction does not match reference with %d threads.\n", i);
       return -1;
     }
 
